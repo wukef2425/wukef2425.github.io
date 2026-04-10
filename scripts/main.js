@@ -56,6 +56,7 @@ function renderMarquee(language) {
 function renderProjects(language) {
   const grid = document.getElementById("projects-grid");
   const label = window.siteContent.translations[language].projects.viewLabel;
+  const fallbackImage = window.siteContent.profileImage;
 
   if (!grid) {
     return;
@@ -65,15 +66,24 @@ function renderProjects(language) {
     .map(
       (project) => `
         <article class="project-card">
-          <p class="project-meta">${project.period}</p>
-          <h3>${project.title[language]}</h3>
-          <p>${project.description[language]}</p>
-          <div class="project-tags">
-            ${project.tags.map((tag) => `<span>${tag}</span>`).join("")}
+          <div class="project-media">
+            <img
+              src="${project.image?.src ?? fallbackImage.src}"
+              alt="${project.image?.alt?.[language] ?? fallbackImage.alt[language]}"
+              loading="lazy"
+            />
           </div>
-          <a class="project-link" href="${project.href}">
-            ${label}
-          </a>
+          <div class="project-body">
+            <p class="project-meta">${project.period}</p>
+            <h3>${project.title[language]}</h3>
+            <p class="project-description">${project.description[language]}</p>
+            <div class="project-tags">
+              ${project.tags.map((tag) => `<span>${tag}</span>`).join("")}
+            </div>
+            <a class="project-link" href="${project.href}">
+              ${label}
+            </a>
+          </div>
         </article>
       `
     )

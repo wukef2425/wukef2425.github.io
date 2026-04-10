@@ -84,6 +84,13 @@ window.siteContent = {
         zh: "placeholder",
         en: "placeholder",
       },
+      image: {
+        src: "assets/images/placeholder.jpg",
+        alt: {
+          zh: "项目封面图",
+          en: "Project cover image",
+        },
+      },
       tags: ["placeholder"],
       href: "#",
     },
@@ -97,6 +104,13 @@ window.siteContent = {
         zh: "placeholder",
         en: "placeholder",
       },
+      image: {
+        src: "assets/images/placeholder.jpg",
+        alt: {
+          zh: "项目封面图",
+          en: "Project cover image",
+        },
+      },
       tags: ["placeholder"],
       href: "#",
     },
@@ -109,6 +123,13 @@ window.siteContent = {
       description: {
         zh: "placeholder",
         en: "placeholder",
+      },
+      image: {
+        src: "assets/images/placeholder.jpg",
+        alt: {
+          zh: "项目封面图",
+          en: "Project cover image",
+        },
       },
       tags: ["placeholder"],
       href: "#",
