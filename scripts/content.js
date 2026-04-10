@@ -1,17 +1,13 @@
 window.siteContent = {
-  defaultLanguage: "zh",
+  defaultLanguage: "en",
   profileImage: {
-    src: "assets/images/profile-placeholder.svg",
+    src: "assets/images/placeholder.jpg",
     alt: {
       zh: "placeholder",
       en: "placeholder",
     },
   },
   site: {
-    shortName: {
-      zh: "个人主页",
-      en: "Portfolio",
-    },
     name: {
       zh: "Kefei Wu",
       en: "Kefei Wu",
@@ -30,7 +26,6 @@ window.siteContent = {
         description: "placeholder",
         primaryAction: "查看项目",
         secondaryAction: "联系我",
-        highlights: ["支持中英文", "纯静态结构"],
         marquee: "Kefei Wu",
       },
       projects: {
@@ -60,7 +55,6 @@ window.siteContent = {
         description: "placeholder",
         primaryAction: "View Projects",
         secondaryAction: "Contact Me",
-        highlights: ["Chinese / English", "Static site structure"],
         marquee: "Kefei Wu",
       },
       projects: {
@@ -122,40 +116,31 @@ window.siteContent = {
   ],
   contacts: [
     {
+      type: "email",
       label: {
         zh: "邮箱",
         en: "Email",
       },
-      value: "placeholder",
-      href: "#",
-      note: {
-        zh: "placeholder",
-        en: "placeholder",
-      },
+      value: "wukefei0211@outlook.com",
+      href: "mailto:wukefei0211@outlook.com",
     },
     {
+      type: "github",
       label: {
         zh: "GitHub",
         en: "GitHub",
       },
       value: "github.com/wukef2425",
       href: "https://github.com/wukef2425",
-      note: {
-        zh: "placeholder",
-        en: "placeholder",
-      },
     },
     {
+      type: "linkedin",
       label: {
         zh: "LinkedIn",
         en: "LinkedIn",
       },
-      value: "placeholder",
-      href: "#",
-      note: {
-        zh: "placeholder",
-        en: "placeholder",
-      },
+      value: "linkedin.com/in/kefei-wu-167674389",
+      href: "https://www.linkedin.com/in/kefei-wu-167674389/",
     },
   ],
 };
