@@ -1,4 +1,24 @@
 const STORAGE_KEY = "portfolio-language";
+const highlightedProjects = pickHighlightedProjects(window.siteContent.projects, 3);
+
+function pickHighlightedProjects(projects, count) {
+  const shuffled = [...projects];
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+  }
+
+  return shuffled.slice(0, count);
+}
+
+function getLinkAttributes(href) {
+  return href && !href.startsWith("#") ? 'target="_blank" rel="noreferrer"' : "";
+}
+
+function getProjectHref(href) {
+  return href === "#" ? "#projects" : href;
+}
 
 function getInitialLanguage() {
   const savedLanguage = window.localStorage.getItem(STORAGE_KEY);
@@ -64,7 +84,10 @@ function renderProjects(language) {
 
   grid.innerHTML = window.siteContent.projects
     .map(
-      (project) => `
+      (project) => {
+        const projectHref = getProjectHref(project.href);
+
+        return `
         <article class="project-card">
           <div class="project-media">
             <img
@@ -80,13 +103,48 @@ function renderProjects(language) {
             <div class="project-tags">
               ${project.tags.map((tag) => `<span>${tag}</span>`).join("")}
             </div>
-            <a class="project-link" href="${project.href}">
+            <a class="project-link" href="${projectHref}" ${getLinkAttributes(projectHref)}>
               ${label}
             </a>
           </div>
         </article>
-      `
+      `;
+      }
     )
+    .join("");
+}
+
+function renderHeroFiles(language) {
+  const fileStack = document.getElementById("hero-files");
+
+  if (!fileStack) {
+    return;
+  }
+
+  const fileLabel = window.siteContent.translations[language].hero.fileLabel;
+  const actionLabel = window.siteContent.translations[language].projects.viewLabel;
+  const rotations = ["-3deg", "1deg", "4deg"];
+
+  fileStack.innerHTML = highlightedProjects
+    .map((project, index) => {
+      const projectHref = getProjectHref(project.href);
+      const tagSummary = project.tags.slice(0, 2).join(" / ");
+
+      return `
+        <a
+          class="file-card"
+          href="${projectHref}"
+          ${getLinkAttributes(projectHref)}
+          style="--file-index: ${index}; --file-rotation: ${rotations[index % rotations.length]};"
+          aria-label="${project.title[language]} · ${actionLabel}"
+        >
+          <span class="file-card-kicker">${project.period} · ${fileLabel}</span>
+          <strong class="file-card-title">${project.title[language]}</strong>
+          <span class="file-card-meta">${tagSummary}</span>
+          <span class="file-card-action">${actionLabel}</span>
+        </a>
+      `;
+    })
     .join("");
 }
 
@@ -159,6 +217,7 @@ function updateLanguageButtons(language) {
 function renderPage(language) {
   renderStaticText(language);
   renderMarquee(language);
+  renderHeroFiles(language);
   renderProjects(language);
   renderContacts(language);
   renderProfileImage(language);

@@ -1,10 +1,10 @@
 window.siteContent = {
   defaultLanguage: "en",
   profileImage: {
-    src: "assets/images/placeholder.jpg",
+    src: "assets/images/profile.png",
     alt: {
-      zh: "placeholder",
-      en: "placeholder",
+      zh: "Kefei Wu 的头像",
+      en: "Portrait of Kefei Wu",
     },
   },
   site: {
@@ -26,6 +26,8 @@ window.siteContent = {
         description: "placeholder",
         primaryAction: "查看项目",
         secondaryAction: "联系我",
+        bubble: "打开文件",
+        fileLabel: "精选项目",
         marquee: "Kefei Wu",
       },
       projects: {
@@ -55,6 +57,8 @@ window.siteContent = {
         description: "placeholder",
         primaryAction: "View Projects",
         secondaryAction: "Contact Me",
+        bubble: "open files",
+        fileLabel: "selected work",
         marquee: "Kefei Wu",
       },
       projects: {
