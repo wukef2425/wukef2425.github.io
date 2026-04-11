@@ -1,15 +1,11 @@
 const STORAGE_KEY = "portfolio-language";
 const highlightedProjects = pickHighlightedProjects(window.siteContent.projects, 3);
+let heroColumnObserver;
 
 function pickHighlightedProjects(projects, count) {
-  const shuffled = [...projects];
-
-  for (let index = shuffled.length - 1; index > 0; index -= 1) {
-    const swapIndex = Math.floor(Math.random() * (index + 1));
-    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
-  }
-
-  return shuffled.slice(0, count);
+  return [...projects]
+    .sort((first, second) => Number(second.period) - Number(first.period))
+    .slice(0, count);
 }
 
 function getLinkAttributes(href) {
@@ -68,7 +64,7 @@ function renderMarquee(language) {
   }
 
   const label = window.siteContent.translations[language].hero.marquee;
-  const items = Array.from({ length: 10 }, () => `<span>${label}</span>`).join("");
+  const items = Array.from({ length: 18 }, () => `<span>${label}</span>`).join("");
 
   marquee.innerHTML = `<div class="marquee-track">${items}${items}</div>`;
 }
@@ -225,6 +221,47 @@ function renderPage(language) {
 
   document.getElementById("current-year").textContent = new Date().getFullYear();
   window.localStorage.setItem(STORAGE_KEY, language);
+  syncHeroColumnHeights();
+}
+
+function syncHeroColumnHeights() {
+  const heroGrid = document.querySelector(".hero-grid");
+  const titleStack = document.querySelector(".hero-title-stack");
+
+  if (!heroGrid || !titleStack) {
+    return;
+  }
+
+  if (window.matchMedia("(max-width: 720px)").matches) {
+    heroGrid.style.removeProperty("--hero-sync-height");
+    return;
+  }
+
+  const titleHeight = Math.ceil(titleStack.getBoundingClientRect().height);
+  heroGrid.style.setProperty("--hero-sync-height", `${titleHeight}px`);
+}
+
+function bindHeroColumnSync() {
+  const titleStack = document.querySelector(".hero-title-stack");
+
+  if (!titleStack) {
+    return;
+  }
+
+  if (typeof ResizeObserver !== "undefined") {
+    heroColumnObserver = new ResizeObserver(() => {
+      syncHeroColumnHeights();
+    });
+    heroColumnObserver.observe(titleStack);
+  }
+
+  window.addEventListener("resize", syncHeroColumnHeights);
+
+  if (document.fonts?.ready) {
+    document.fonts.ready.then(() => {
+      syncHeroColumnHeights();
+    });
+  }
 }
 
 function bindLanguageSwitcher() {
@@ -237,3 +274,4 @@ function bindLanguageSwitcher() {
 
 bindLanguageSwitcher();
 renderPage(getInitialLanguage());
+bindHeroColumnSync();
